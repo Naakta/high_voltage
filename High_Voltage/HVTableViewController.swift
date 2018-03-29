@@ -33,7 +33,6 @@ class HVTableViewController: UITableViewController, HVPopOverDelegate, UITextFie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        printShit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,6 +61,7 @@ class HVTableViewController: UITableViewController, HVPopOverDelegate, UITextFie
             let thisNumber = myBrain.numberDictionary[thisCellString]
             textField.text = "\(thisNumber!)"
         }
+        
         if lastCellOfTable == indexPath.row && !completed {
             let textField = cell.viewWithTag(1001) as! UITextField
             textField.becomeFirstResponder()
@@ -81,7 +81,6 @@ class HVTableViewController: UITableViewController, HVPopOverDelegate, UITextFie
         if textField.text != "" {
             myBrain.updateThisVariable(string: cellString, with: Double(textField.text!)!)
             if myBrain.readyToEquate() {
-                printShit()
                 tableArray = myBrain.fillTableArray(array: tableArray)
                 completed = true
                 myBrain.fillNumberDictionary()
@@ -107,29 +106,4 @@ class HVTableViewController: UITableViewController, HVPopOverDelegate, UITextFie
         tableView.reloadData()
         completed = false
     }
-    
-    func printShit() {
-        print(myBrain.myWatts)
-        print(myBrain.myVolts)
-        print(myBrain.myAmps)
-        print(myBrain.myOhms)
-    }
-    
-//    @IBAction func popOverAction(_ sender: Any) {
-//        self.performSegue(withIdentifier: "popOver", sender: self)
-//    }
-//    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "popOver" {
-//            let controller = segue.destination.popoverPresentationController
-//            controller?.delegate = self
-//
-//        /*let controller = segue.destination as! UIPopoverPresentationController
-//        controller.delegate = self*/
-//        }
-//    }
-//    
-//    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-//        return .none
-//    }
 }

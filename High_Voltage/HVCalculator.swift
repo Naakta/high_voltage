@@ -19,12 +19,6 @@ class HVCalculator {
     var ohmCheck = false
     var numberDictionary = [String: Double]()
     
-    func fillNumberDictionary() {
-        numberDictionary["AmpsCell"] = myAmps
-        numberDictionary["WattsCell"] = myWatts
-        numberDictionary["VoltsCell"] = myVolts
-        numberDictionary["OhmsCell"] = myOhms
-     }
     
     func updateThisVariable(string: String, with number: Double) {
         if string == "Watts" {
@@ -40,6 +34,13 @@ class HVCalculator {
             myOhms = number
             ohmCheck = true
         }
+    }
+    
+    func fillNumberDictionary() {
+        numberDictionary["WattsCell"] = myWatts
+        numberDictionary["VoltsCell"] = myVolts
+        numberDictionary["AmpsCell"] = myAmps
+        numberDictionary["OhmsCell"] = myOhms
     }
     
     func fillPopArray() -> [String] {
@@ -77,13 +78,6 @@ class HVCalculator {
         
         return returnArray
     }
-    // Each time a cell is added to the table,
-    // VC will ask "if readyToEquate() {}" after a cell is added to the table
-    // On first cell entered, only one check will be true and it will skip down to return false
-    // After two cells have been added, the rest will execute, and the VC will show the rest of the values
-    // It will just update all labels at the same time, even though two won't actually change.
-    // It will have to add the correct two types of cells (unless I'm thinking of that part of the app wrong)
-    // As the second cell is added, the table should show all four numbers by the time user pops back to tableView
     
     func readyToEquate() -> Bool {
         if wattCheck && voltCheck {
