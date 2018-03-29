@@ -17,7 +17,8 @@ class HVTableViewController: UITableViewController, HVPopOverDelegate, UITextFie
     var cellString = ""
     var completed = false
 
-
+    @IBOutlet weak var plusButton: UIBarButtonItem!
+    
     // Prototype Methods
     
     func didSelectThisVariable(varName: String) {
@@ -56,16 +57,32 @@ class HVTableViewController: UITableViewController, HVPopOverDelegate, UITextFie
         let lastCellOfTable = tableArray.count - 1
         let cell = tableView.dequeueReusableCell(withIdentifier: thisCellString, for: indexPath)
         
-        if completed {
-            let textField = cell.viewWithTag(1001) as! UITextField
-            let thisNumber = myBrain.numberDictionary[thisCellString]
-            textField.text = "\(thisNumber!)"
+        let textField = cell.viewWithTag(1001) as! UITextField
+        textField.becomeFirstResponder()
+        
+        if textField.isFirstResponder{
+            print("--------I'm a firefighter")
+        } else {
+            print("--------I'm a dumptruck")
         }
         
-        if lastCellOfTable == indexPath.row && !completed {
-            let textField = cell.viewWithTag(1001) as! UITextField
-            textField.becomeFirstResponder()
+        if completed {
+            let thisNumber = myBrain.numberDictionary[thisCellString]
+            textField.text = "\(thisNumber!)"
+            textField.resignFirstResponder()
+            print("completed!!!")
         }
+        if lastCellOfTable == indexPath.row && !completed {
+            textField.text = ""
+            print("responding!")
+        }
+        
+        if tableArray.count == 4 {
+            plusButton.isEnabled = false
+        } else {
+            plusButton.isEnabled = true
+        }
+        
         return cell
     }
     
@@ -85,6 +102,7 @@ class HVTableViewController: UITableViewController, HVPopOverDelegate, UITextFie
                 completed = true
                 myBrain.fillNumberDictionary()
                 tableView.reloadData()
+                print("I'm ready!")
             }
             textField.resignFirstResponder()
         }
@@ -103,7 +121,13 @@ class HVTableViewController: UITableViewController, HVPopOverDelegate, UITextFie
     @IBAction func clearWasPressed() {
         myBrain = HVCalculator()
         tableArray = [String]()
+        clearTextFields()
         tableView.reloadData()
         completed = false
+        plusButton.isEnabled = true
+    }
+    
+    func clearTextFields() {
+        
     }
 }
