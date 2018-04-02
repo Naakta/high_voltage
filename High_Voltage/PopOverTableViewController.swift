@@ -40,6 +40,7 @@ class PopOverTableViewController: UITableViewController {
         return cell
     }
     
+    // Sends the selected variable to the tableVC
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.didSelectThisVariable(varName: popOverArray[indexPath.row])
     }

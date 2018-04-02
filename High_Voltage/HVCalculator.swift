@@ -19,7 +19,8 @@ class HVCalculator {
     var ohmCheck = false
     var numberDictionary = [String: Double]()
     
-    
+    // Takes the name selected from popOver, stores the number entered into the textField into
+    // the correct variable, then checks true for that variable
     func updateThisVariable(string: String, with number: Double) {
         if string == "Watts" {
             myWatts = number
@@ -36,6 +37,7 @@ class HVCalculator {
         }
     }
     
+    // Creates a dictionary for tableView to display appropriate numbers in appropriate cells
     func fillNumberDictionary() {
         numberDictionary["WattsCell"] = myWatts
         numberDictionary["VoltsCell"] = myVolts
@@ -43,6 +45,7 @@ class HVCalculator {
         numberDictionary["OhmsCell"] = myOhms
     }
     
+    // Creates popOverArray based on which variables are not set yet
     func fillPopArray() -> [String] {
         var returnArray = [String]()
         if !wattCheck {
@@ -61,6 +64,7 @@ class HVCalculator {
         return returnArray
     }
     
+    // Completes the tableArray with which two variables were not chosen by the user
     func fillTableArray(array: [String]) -> [String] {
         var returnArray = array
         if !wattCheck {
@@ -79,6 +83,8 @@ class HVCalculator {
         return returnArray
     }
     
+    // After the user has entered two numbers, this function will run and find values of
+    // the two remaining variables
     func readyToEquate() -> Bool {
         if wattCheck && voltCheck {
             findMyAmps(watts: myWatts, volts: myVolts)
@@ -108,6 +114,11 @@ class HVCalculator {
         return false
     }
     
+    
+    // These four functions all work the same way
+    // Uses conditionals in default values so readyToEquate only needs to fill in what it knows
+    // Takes advantage of nil values to decide which equation to use
+    // 1 - Watts
     func findMyWatts(volts: Double? = nil, amps: Double? = nil, ohms: Double? = nil) {
         if volts == nil {
             myWatts = pow(amps!, 2) * ohms!
@@ -118,6 +129,7 @@ class HVCalculator {
         }
     }
     
+    // 2 - Volts
     func findMyVolts(watts: Double? = nil, amps: Double? = nil, ohms: Double? = nil) {
         if watts == nil {
             myVolts = amps! * ohms!
@@ -128,6 +140,7 @@ class HVCalculator {
         }
     }
     
+    // 3 - Amps
     func findMyAmps(watts: Double? = nil, volts: Double? = nil, ohms: Double? = nil) {
         if watts == nil {
             myAmps = volts! / ohms!
@@ -138,6 +151,7 @@ class HVCalculator {
         }
     }
     
+    // 4 - Ohms
     func findMyOhms(watts: Double? = nil, volts: Double? = nil, amps: Double? = nil) {
         if watts == nil {
             myOhms = volts! / amps!
